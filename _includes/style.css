@@ -1,0 +1,51 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: rgb(246, 207, 47);
+  display: flex;
+  flex-direction: column;
+}
+.content {
+  text-align: center;
+
+  /* Fill the entire height of the page above the footer. */
+  flex: 1;
+
+  /* Center child items */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.content h1 {
+  margin-top: 0;
+  margin-bottom: 0.5em;
+  color: white;
+  font-weight: bold;
+  font-family: "Source Code Pro", Monaco, Consolas, "Courier New", monospace, Impact;
+  font-size: {% if page.h1-size %}{{ page.h1-size }} {% else %}7vw{% endif %};
+  text-shadow:
+    0 0 20px rgba(255, 255, 255, 0.5),
+    0 0 40px rgba(255, 255, 255, 0.5),
+    0 0 60px rgba(255, 255, 255, 0.5);
+}
+.footer {
+  padding: 2vh 10vw;
+  background: rgba(0, 0, 0, 0.25);
+  color: white;
+  text-align: center;
+  font-family: Helvetica, Tahoma, sans-serif;
+  font-size: {% if page.footer-size %}{{ page.footer-size }}{% else %}5vw{% endif %};
+
+  /* Size based on content */
+  flex: 0 0 content;
+}
+.footer a {
+  color: rgba(255, 255, 255, 0.75);
+}
+.footer a:hover {
+  color: white;
+}
