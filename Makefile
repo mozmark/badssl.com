@@ -1,6 +1,6 @@
 all:
 
-SITE = badssl.com
+SITE = menagerie.com
 URL = "https://${SITE}/"
 
 .PHONY: open
@@ -33,7 +33,7 @@ link:
 	if [ -f /etc/nginx/nginx.conf ] ; then sed -i '/Virtual Host Configs/a include /var/www/badssl/nginx.conf;' /etc/nginx/nginx.conf; else @echo "Please add `pwd`/nginx.conf to your nginx.conf configuration."; fi
 
 .PHONY: install
-install: keys install-keys link
+install: keys install-keys link httpdconfig
 
 .PHONY: jekyll
 jekyll:
@@ -43,6 +43,12 @@ jekyll:
 .PHONY: docker
 docker: jekyll
 	sudo docker build -t badssl .
+
+.PHONY: httpdconfig
+httpdconfig: jekyll
+	sed -i 's,return 302 .*;,return 302 $(URL);,g' _site/nginx.conf
+	sed -i 's,server_name \(.*\)\..*\..*;,server_name \1.$(SITE);,g' _site/domains/**/*.conf
+	sed -i 's,server_name .*;,server_name $(SITE);,g' _site/domains/misc/badssl.com.conf
 
 ## Deployment
 
