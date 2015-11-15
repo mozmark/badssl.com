@@ -1,6 +1,6 @@
 all:
 
-SITE = menagerie.com
+SITE = badssl.com
 URL = "https://${SITE}/"
 
 .PHONY: open
@@ -38,7 +38,7 @@ install: keys install-keys link httpdconfig
 .PHONY: jekyll
 jekyll:
 	rm -rf ./_site/
-	jekyll build
+	DOMAIN="${SITE}" HTTP_DOMAIN="http.${SITE}" jekyll build
 
 .PHONY: docker
 docker: jekyll
